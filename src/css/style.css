@@ -114,6 +114,33 @@ button {
   border-bottom: 2px solid var(--primary-color);
 }
 
+.cart-icon-container {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-icon-container svg {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.cart-count {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background-color: #8a470c;
+  color: #0000;
+  font-size: 0.75rem;
+  border-radius: 50%;
+  padding: 2px 6px;
+  text-align: center;
+}
+
+.cart-count.hide {
+  display: none;
+}
+
 /* End utility classes */
 
 /* Cart icon styles */

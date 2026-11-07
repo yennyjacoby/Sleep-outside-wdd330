@@ -36,3 +36,9 @@ export function renderListWithTemplate(template, parentElement, list, position =
   }
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+import { updateCartCount } from ".utils.mjs";
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount();
+})
