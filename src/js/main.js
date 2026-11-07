@@ -1,14 +1,12 @@
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
 
-// 1. Create an instance of ProductData for tents
+// Create an instance of ProductData for tents
 const dataSource = new ProductData("tents");
 
-// 2. Select the product list element from the DOM (index.html)
+// Select the product list element from the DOM
 const listElement = document.querySelector(".product-list");
 
-// 3. Create an instance of ProductList
+// Create an instance of ProductList and initialize it
 const tentList = new ProductList("tents", dataSource, listElement);
-
-// 4. Initialize the product list rendering
 tentList.init();

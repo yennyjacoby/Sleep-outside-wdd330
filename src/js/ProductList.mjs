@@ -1,7 +1,6 @@
 import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
-    // Handle whether Brand is an object or a string
     const brand = typeof product.Brand === "object" ? product.Brand.Name : product.Brand;
 
     return `<li class="product-card">
