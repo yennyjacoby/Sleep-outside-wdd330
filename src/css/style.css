@@ -254,6 +254,28 @@ button {
   cursor: pointer;
 }
 
+/* Start cart footer styles */
+/* Styles the cart total section, keeping it aligned to the right and consistent with the project's design. */
+.cart-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-top: 2px solid var(--primary-color);
+  background-color: #f8f8f8;
+}
+
+.cart-total {
+  font-size: var(--large-font);
+  font-weight: bold;
+  color: var(--dark-grey);
+  padding: 0;
+}
+.hide {
+  display: none;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
