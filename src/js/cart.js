@@ -5,6 +5,9 @@ function renderCartContents() {
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 
+  // Update the cart total whenever the cart contents are rendered.
+  calculateTotalCart(cartItems);
+
   const removeButtons = document.querySelectorAll(".remove-item");
   removeButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -27,6 +30,26 @@ function renderCartContents() {
       renderCartContents()
     });
   }); 
+}
+
+// Calculates and displays the cart total.
+// Shows the cart footer when items exist and hides it when the cart is empty.
+function calculateTotalCart(cartItems) {
+  const cartFooter = document.querySelector(".cart-footer");
+  const cartTotal = document.querySelector(".cart-total");
+
+  if (cartItems.length > 0) {
+    // Calculate the total price of all products in the cart.
+    const inicialValue = 0;
+    const sumAllProducts = cartItems.reduce((accumulator, currentValue) => accumulator + currentValue.FinalPrice, inicialValue);
+    // Display the cart footer and update the total amount.
+    cartFooter.classList.remove("hide");
+    cartTotal.textContent = `Total $${sumAllProducts}`;
+  } else {
+    // Hide the cart footer and clear the previous total.
+    cartFooter.classList.add("hide");
+    cartTotal.textContent = ``;
+  }
 }
 
 function cartItemTemplate(item) {
