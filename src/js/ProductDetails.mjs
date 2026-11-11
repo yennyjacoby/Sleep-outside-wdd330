@@ -74,8 +74,17 @@ function productDetailsTemplate(product) {
   productImage.alt = product.NameWithoutBrand;
 
   document.getElementById('productPrice').textContent = product.FinalPrice;
+  // Calculate discount percentage if suggested retail price exists and is higher
+  const discountElement = document.getElementById('productDiscount');
+  if (product.SuggestedRetailPrice > product.FinalPrice) {
+    const savings = product.SuggestedRetailPrice - product.FinalPrice;
+    const discountPercent = Math.round((savings / product.SuggestedRetailPrice) * 100);
+
+    discountElement.textContent = `save ${discountPercent}%`;
+    discountElement.hidden = false;
+  };
+
   document.getElementById('productColor').textContent = product.Colors[0].ColorName;
   document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
-
   document.getElementById('addToCart').dataset.id = product.Id;
 }
