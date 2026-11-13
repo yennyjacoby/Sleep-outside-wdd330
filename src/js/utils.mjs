@@ -18,6 +18,10 @@ export function setClick(selector, callback) {
   qs(selector).addEventListener("click", callback);
 }
 
+
+// IMPORTANT!!!!!
+// This function works in an intuitive way if you understand what is going on. Basically, you have to input what you want searched into the functions
+// parantheses. I.E. if you were using the term product=, you would need to have product in the parantheses so it knows what it is needing to search for!
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
