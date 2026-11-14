@@ -94,6 +94,35 @@ p {
   margin-top: -1.7em;
 }
 
+/* Category class in index.html for the svg icons*/
+
+.categories {
+  margin-bottom: 3rem;
+}
+
+.category-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.category-list a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  text-align: center;
+}
+
+.category-list img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+}
+
 /* utility classes */
 .highlight {
   color: var(--tertiary-color);
