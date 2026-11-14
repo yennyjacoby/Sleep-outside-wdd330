@@ -56,8 +56,19 @@ export default class ProductDetails {
 
   addProductToCart() {
     const cartItems = getLocalStorage("so-cart") || [];
-    cartItems.push(this.product);
+    const existingItem = cartItems.find(
+      (item) => item.Id === this.product.Id
+      );
+    if (existingItem) {
+      existingItem.Quantity += 1;
+    } else {
+      this.product.Quantity = 1;
+      cartItems.push(this.product);
+    }
+    
+    
     setLocalStorage("so-cart", cartItems);
+    console.log(cartItems);
   }
 
   renderProductDetails() {
@@ -66,16 +77,21 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-  document.querySelector('h2').textContent = product.Brand.Name;
-  document.querySelector('h3').textContent = product.NameWithoutBrand;
+  document.querySelector('h2').textContent = product.Category.charAt(0).toUpperCase() + product.Category.slice(1);
+  document.querySelector("#p-brand").textContent = product.Brand.Name;
+  document.querySelector("#p-name").textContent = product.NameWithoutBrand;
+
+  document.getElementById('productColor').textContent = product.Colors[0].ColorName;
+  document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
+  document.getElementById('addToCart').dataset.id = product.Id;
 
   const productImage = document.getElementById('productImage');
-  productImage.src = product.Image;
+  productImage.src = product.Images.PrimaryLarge;
   productImage.alt = product.NameWithoutBrand;
 
   document.getElementById('productPrice').textContent = product.FinalPrice;
   // Calculate discount percentage if suggested retail price exists and is higher
-  const discountElement = document.getElementById('productDiscount');
+  const discountElement = document.getElementById("productDiscount");
   if (product.SuggestedRetailPrice > product.FinalPrice) {
     const savings = product.SuggestedRetailPrice - product.FinalPrice;
     const discountPercent = Math.round((savings / product.SuggestedRetailPrice) * 100);
@@ -84,7 +100,5 @@ function productDetailsTemplate(product) {
     discountElement.hidden = false;
   };
 
-  document.getElementById('productColor').textContent = product.Colors[0].ColorName;
-  document.getElementById('productDesc').innerHTML = product.DescriptionHtmlSimple;
-  document.getElementById('addToCart').dataset.id = product.Id;
+  
 }

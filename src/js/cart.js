@@ -23,8 +23,12 @@ function renderCartContents() {
       // console.log(cartArray);
       // these two things grab the index of the first product that matches the id, and then removes it.
       const index = cartArray.findIndex((product) => product.Id === productId);
-      if(index >= 0) {
-      cartArray.splice(index, 1);
+      // this grabs out the item from the array.
+      const item = cartArray[index];
+      if(item.Quantity > 1) {
+        item.Quantity -= 1;
+      } else {
+        cartArray.splice(index, 1);
       }
 
       // this resets the initial local storage array to have the item removed.
@@ -43,8 +47,10 @@ function calculateTotalCart(cartItems) {
 
   if (cartItems.length > 0) {
     // Calculate the total price of all products in the cart.
-    const inicialValue = 0;
-    const sumAllProducts = cartItems.reduce((accumulator, currentValue) => accumulator + currentValue.FinalPrice, inicialValue);
+    const initialValue = 0;
+    // Braxton here. I added '* currentValue.Quantity' to accurately reflect the changes I made in week 03, which is allowing the card to have a quantity value.
+    // meaning that this had to be changed to accurately reflect the total price.
+    const sumAllProducts = cartItems.reduce((accumulator, currentValue) => accumulator + (currentValue.FinalPrice * currentValue.Quantity), initialValue);
     // Display the cart footer and update the total amount.
     cartFooter.classList.remove("hide");
     cartTotal.textContent = `Total $${sumAllProducts}`;
@@ -60,7 +66,7 @@ function cartItemTemplate(item) {
   <span class="remove-item" data-id="${item.Id}">X</span>
   <a href="#" class="cart-card__image">
     <img
-      src="${item.Image}"
+      src="${item.Images.PrimaryMedium}"
       alt="${item.Name}"
     />
   </a>
@@ -68,7 +74,7 @@ function cartItemTemplate(item) {
     <h2 class="card__name">${item.Name}</h2>
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">qty: 1</p>
+  <p class="cart-card__quantity">qty: ${item.Quantity}</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>`;
 
