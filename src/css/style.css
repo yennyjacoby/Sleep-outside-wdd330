@@ -343,3 +343,29 @@ footer {
   border-radius: 4px;
   margin-top: 8px;
 }
+
+/* empty cart message */
+.cart-empty {
+  text-align: center;
+  padding: 2rem 1rem;
+  list-style: none;
+  color: var(--dark-grey);
+  font-family: var(--font-body);
+}
+
+.cart-empty__link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--primary-color);
+  /* olive green */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  border: 2px solid var(--secondary-color);
+}
+
+.cart-empty__link:hover {
+  background: var(--secondary-color);
+  /* brown on hover */
+}
