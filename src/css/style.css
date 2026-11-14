@@ -343,3 +343,17 @@ footer {
   border-radius: 4px;
   margin-top: 8px;
 }
+
+.categories {
+  display: flex;
+  justify-content: space-around;
+  margin: 2rem 0;
+}
+
+.categories img {
+  width: 100px;
+}
+
+.categories p{
+  font-weight: bold;
+}
