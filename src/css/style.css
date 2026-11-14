@@ -314,3 +314,69 @@ footer {
   border-radius: 4px;
   z-index: 2;
 }
+
+
+/* Quick View Button */
+.quick-view-btn {
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.6em;
+  font-size: 0.9rem;
+}
+
+/* Quick View Modal */
+.quick-view-dialog {
+  width: 90%;
+  max-width: 650px;
+  margin: auto;
+  padding: 1.5rem;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.quick-view-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.quick-view-content {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.quick-view-content img {
+  width: 100%;
+}
+
+.quick-view-info h2,
+.quick-view-info h3 {
+  margin-bottom: 0.7rem;
+}
+
+.quick-view-price {
+  font-weight: bold;
+  color: var(--tertiary-color);
+}
+
+.quick-view-close {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+  padding: 0.2rem 0.7rem;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+@media screen and (max-width: 500px) {
+  .quick-view-content {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-view-dialog {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
