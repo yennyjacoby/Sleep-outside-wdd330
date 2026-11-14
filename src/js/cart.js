@@ -4,7 +4,16 @@ import { loadHeaderFooter } from "./utils.mjs";
 loadHeaderFooter();
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
+  // fall back to an empty array so null doesn't crash .map
+  const cartItems = getLocalStorage("so-cart") || [];
+
+  // empty cart: show a message, hide the total footer, stop here
+  if (cartItems.length === 0) {
+    document.querySelector(".product-list").innerHTML =
+      `<li class="cart-empty">Your cart is empty.</li>`;
+    calculateTotalCart(cartItems);
+    return;
+  }
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 
