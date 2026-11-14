@@ -11,10 +11,13 @@ function productCardTemplate(product) {
         discountBadge = `<span class="discount-badge">Save ${discountPercent}%</span>`;
     }
 
+    // Use PrimaryMedium from the API response structure for images
+    const imageUrl = product.Images ? product.Images.PrimaryMedium : product.Image;
+
     return `<li class="product-card">
-    <a href="product_pages/?product=${product.Id}">
+    <a href="/product_pages/index.html?product=${product.Id}">
       ${discountBadge}
-      <img src="${product.Image}" alt="Image of ${product.Name}">
+      <img src="${imageUrl}" alt="Image of ${product.Name}">
       <h3 class="card__brand">${brand}</h3>
       <h2 class="card__name">${product.NameWithoutBrand}</h2>
       <p class="product-card__price">$${product.FinalPrice}</p>
@@ -30,11 +33,12 @@ export default class ProductList {
     }
 
     async init() {
-        const list = await this.dataSource.getData();
+        // Pass the category into getData to pull from the API correctly
+        const list = await this.dataSource.getData(this.category);
         this.renderList(list);
     }
 
     renderList(list) {
-        renderListWithTemplate(productCardTemplate, this.listElement, list);
+        renderListWithTemplate(productCardTemplate, this.listElement, list, "afterbegin", true);
     }
 }
