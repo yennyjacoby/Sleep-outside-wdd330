@@ -282,6 +282,29 @@ button {
 .cart-card__quantity {
   grid-row: 1;
   grid-column: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 1.5rem;
+  transform: translateY(1.5rem);
+}
+
+.qty-btn {
+  width: 1.75rem;
+  height: 1.75rem;
+  min-width: 1.75rem;
+  flex-shrink: 0;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #333;
+  background: #fff;
+  border: 1px solid #999;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .cart-card__price {
