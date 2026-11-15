@@ -1,21 +1,26 @@
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
-import { loadHeaderFooter, getParam } from "./utils.mjs";
+import { getParam, loadHeaderFooter } from "./utils.mjs";
 
-loadHeaderFooter();
+export function renderProductList(productType = "tents") {
+  const dataSource = new ProductData();
+  const listElement = document.querySelector(".product-list");
+  const title = document.querySelector(".title-highlight");
 
-// Create an instance of ProductData for tents
-const dataSource = new ProductData();
-const productType = getParam("category");
+  if (!listElement) {
+    throw new Error("Product list element was not found.");
+  }
 
-// Select the product list element from the DOM
-const listElement = document.querySelector(".product-list");
+  const inventoryList = new ProductList(productType, dataSource, listElement);
+  inventoryList.init();
 
-// Create an instance of ProductList and initialize it
-const inventoryList = new ProductList(productType, dataSource, listElement);
-inventoryList.init();
+  if (title) {
+    title.textContent =
+      productType.charAt(0).toUpperCase() + productType.slice(1);
+  }
+}
 
-const title = document.querySelector(".title-highlight");
-
-console.log(productType);
-title.textContent = productType.charAt(0).toUpperCase() + productType.slice(1);
+if (document.body.dataset.page === "product-listing") {
+  loadHeaderFooter();
+  renderProductList(getParam("category") ?? "tents");
+}
