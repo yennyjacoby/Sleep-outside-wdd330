@@ -4,6 +4,8 @@ function cartItemTemplate(item) {
   const image = item.Images?.PrimaryMedium || item.Image;
   const quantity = item.Quantity || 1;
 
+// Added - / + buttons for the cart 
+
   return `<li class="cart-card divider">
   <span class="remove-item cart-card__remove" data-id="${item.Id}">X</span>
   <a href="#" class="cart-card__image">
@@ -13,7 +15,11 @@ function cartItemTemplate(item) {
     <h2 class="card__name">${item.Name}</h2>
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">qty: ${quantity}</p>
+  <div class="cart-card__quantity">
+    <button class="qty-btn" data-id="${item.Id}" data-delta="-1" aria-label="Decrease quantity">−</button>
+    <span>${quantity}</span>
+    <button class="qty-btn" data-id="${item.Id}" data-delta="1" aria-label="Increase quantity">+</button>
+  </div>
   <p class="cart-card__price">$${item.FinalPrice}</p>
 </li>`;
 }
@@ -43,24 +49,35 @@ export default class ShoppingCart {
       parentElement.querySelectorAll(".remove-item").forEach((btn) => {
         btn.addEventListener("click", (e) => this.removeItem(e.target.dataset.id));
       });
+
+      parentElement.querySelectorAll(".qty-btn").forEach((btn) => {
+        btn.addEventListener("click", (e) =>
+          this.changeQuantity(e.target.dataset.id, Number(e.target.dataset.delta))
+        );
+      });
     }
 
     this.renderTotal(cartItems);
   }
 
+// Add changeQuantity to update item quantity in localstorage and remove the item when the quantity is 0
+  changeQuantity(id, delta) {
+    const cartItems = getLocalStorage(this.key) || [];
+    const item = cartItems.find((item) => item.Id === id);
+    if (!item) return;
+
+    item.Quantity = (item.Quantity || 1) + delta;
+
+    const updated = cartItems.filter((item) => item.Quantity > 0);
+    setLocalStorage(this.key, updated);
+    this.renderCart();
+  }
+
   removeItem(id) {
     const cartItems = getLocalStorage(this.key) || [];
-    const index = cartItems.findIndex((item) => item.Id === id);
+    const updated = cartItems.filter((item) => item.Id !== id);
 
-    if (index !== -1) {
-      if ((cartItems[index].Quantity || 1) > 1) {
-        cartItems[index].Quantity -= 1;
-      } else {
-        cartItems.splice(index, 1);
-      }
-    }
-
-    setLocalStorage(this.key, cartItems);
+    setLocalStorage(this.key, updated);
     this.renderCart();
   }
 
