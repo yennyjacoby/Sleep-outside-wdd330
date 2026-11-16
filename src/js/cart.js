@@ -4,7 +4,16 @@ import { loadHeaderFooter } from "./utils.mjs";
 loadHeaderFooter();
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
+  // fall back to an empty array so null doesn't crash .map
+  const cartItems = getLocalStorage("so-cart") || [];
+
+  if (cartItems.length === 0) {
+    // markup now comes from emptyCartTemplate() at the bottom of the file
+    document.querySelector(".product-list").innerHTML = emptyCartTemplate();
+    calculateTotalCart(cartItems);
+    return;
+  }
+
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
 
@@ -81,4 +90,13 @@ function cartItemTemplate(item) {
   return newItem;
 }
 
-renderCartContents();
+function emptyCartTemplate() {
+  return `<li class="cart-empty">
+    <p>⛺ Your cart is empty.</p>
+    <a href="/index.html" class="cart-empty__link">Continue shopping</a>
+  </li>`;
+}
+
+renderCartContents(); // stays last
+
+
