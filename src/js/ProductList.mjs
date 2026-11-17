@@ -19,24 +19,15 @@ function productCardTemplate(product) {
         discountBadge = `<span class="discount-badge">Save ${discountPercent}%</span>`;
     }
 
-    return `
-        <li class="product-card">
-            <a href="product_pages/?product=${product.Id}">
-                ${discountBadge}
-                <img src="${product.Image}" alt="Image of ${product.Name}">
-                <h3 class="card__brand">${brand}</h3>
-                <h2 class="card__name">${product.NameWithoutBrand}</h2>
-                <p class="product-card__price">$${product.FinalPrice}</p>
-            </a>
-
-            <button 
-                type="button"
-                class="quick-view-btn"
-                data-product-id="${product.Id}">
-                Quick View
-            </button>
-        </li>
-    `;
+    return `<li class="product-card">
+        <a href="../product_pages/?product=${product.Id}">
+        ${discountBadge}
+        <img src="${product.Images.PrimaryMedium}" alt="Image of ${product.Name}">
+        <h3 class="card__brand">${brand}</h3>
+        <h2 class="card__name">${product.NameWithoutBrand}</h2>
+        <p class="product-card__price">$${product.FinalPrice}</p>
+        </a>
+    </li>`;
 }
 
 export default class ProductList {
@@ -47,26 +38,14 @@ export default class ProductList {
     }
 
     async init() {
-    const list = await this.dataSource.getData();
-    this.renderList(list);
+        const list = await this.dataSource.getData(this.category);
+        this.renderList(list);
 
-    this.listElement.addEventListener("click", (event) => {
-        const button = event.target.closest(".quick-view-btn");
-
-        if (!button) return;
-
-        event.preventDefault();
-        this.showQuickView(button.dataset.productId);
-    });
-
-    const dialog = document.getElementById("quick-view-dialog");
-
-    dialog.addEventListener("click", (event) => {
-        if (event.target === dialog) {
-            dialog.close();
-        }
-    });
-}
+        const title = document.getElementById("category-title");
+        //Capitalizes the first letter and replace the hyphen with a space (e.g. "sleeping-bags" -> "Sleeping bags")
+        const name = this.category.replace("-", " ");
+        title.textContent = `Top Products: ${name.charAt(0).toUpperCase() + name.slice(1)}`; 
+    }
 
     renderList(list) {
         renderListWithTemplate(
