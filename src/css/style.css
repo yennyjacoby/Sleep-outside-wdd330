@@ -94,33 +94,44 @@ p {
   margin-top: -1.7em;
 }
 
-/* Category class in index.html for the svg icons*/
 
+/* Categories Section */
 .categories {
-  margin-bottom: 3rem;
-}
-
-.category-list {
-  list-style: none;
-  padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+  padding: 0 1rem;
 }
 
-.category-list a {
+.category {
+  text-align: center;
+}
+
+.category a {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-decoration: none;
   color: inherit;
-  text-align: center;
 }
 
-.category-list img {
-  width: 100%;
-  max-width: 150px;
-  height: auto;
+.category img {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.category img:hover {
+  transform: scale(1.1);
+}
+
+.category p {
+  margin-top: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
 }
 
 /* utility classes */
