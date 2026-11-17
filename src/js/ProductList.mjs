@@ -1,13 +1,21 @@
 import { renderListWithTemplate } from "./utils.mjs";
 
 function productCardTemplate(product) {
-    const brand = typeof product.Brand === "object" ? product.Brand.Name : product.Brand;
+    const brand = typeof product.Brand === "object"
+        ? product.Brand.Name
+        : product.Brand;
 
-    // Calculate discount percentage if suggested retail price exists and is higher
     let discountBadge = "";
-    if (product.SuggestedRetailPrice && product.SuggestedRetailPrice > product.FinalPrice) {
+
+    if (
+        product.SuggestedRetailPrice &&
+        product.SuggestedRetailPrice > product.FinalPrice
+    ) {
         const savings = product.SuggestedRetailPrice - product.FinalPrice;
-        const discountPercent = Math.round((savings / product.SuggestedRetailPrice) * 100);
+        const discountPercent = Math.round(
+            (savings / product.SuggestedRetailPrice) * 100
+        );
+
         discountBadge = `<span class="discount-badge">Save ${discountPercent}%</span>`;
     }
 
@@ -40,6 +48,51 @@ export default class ProductList {
     }
 
     renderList(list) {
-        renderListWithTemplate(productCardTemplate, this.listElement, list);
+        renderListWithTemplate(
+            productCardTemplate,
+            this.listElement,
+            list
+        );
+    }
+
+    async showQuickView(productId) {
+        const product = await this.dataSource.findProductById(productId);
+
+        if (!product) return;
+
+        const brand = typeof product.Brand === "object"
+            ? product.Brand.Name
+            : product.Brand;
+
+        const dialog = document.getElementById("quick-view-dialog");
+
+        dialog.innerHTML = `
+            <div class="quick-view-content">
+                <button 
+                    type="button" 
+                    class="quick-view-close"
+                    aria-label="Close dialog">
+                    &times;
+                </button>
+
+                <img src="${product.Image}" alt="${product.NameWithoutBrand}">
+
+                <div class="quick-view-info">
+                    <h2>${brand}</h2>
+                    <h3>${product.NameWithoutBrand}</h3>
+                    <p class="quick-view-price">$${product.FinalPrice}</p>
+                    <p>${product.Colors?.[0]?.ColorName || "Colour not specified"}</p>
+                    <div class="quick-view-description">
+                        ${product.DescriptionHtmlSimple || "No description available."}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        dialog.showModal();
+
+        dialog.querySelector(".quick-view-close").addEventListener("click", () => {
+            dialog.close();
+        });
     }
 }
