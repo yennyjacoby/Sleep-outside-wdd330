@@ -8,13 +8,13 @@ function cartItemTemplate(item) {
 
   return `<li class="cart-card divider">
   <span class="remove-item cart-card__remove" data-id="${item.Id}">X</span>
-  <a href="#" class="cart-card__image">
+  <a href="../product_pages/index.html?product=${encodeURIComponent(item.Id)}" class="cart-card__image">
     <img src="${image}" alt="${item.Name}" />
   </a>
-  <a href="#">
+  <a href="../product_pages/index.html?product=${encodeURIComponent(item.Id)}">
     <h2 class="card__name">${item.Name}</h2>
   </a>
-  <p class="cart-card__color">${item.Colors[0].ColorName}</p>
+  <p class="cart-card__color">${item.Colors?.[0]?.ColorName || ""}</p>
   <div class="cart-card__quantity">
     <button class="qty-btn" data-id="${item.Id}" data-delta="-1" aria-label="Decrease quantity">−</button>
     <span>${quantity}</span>

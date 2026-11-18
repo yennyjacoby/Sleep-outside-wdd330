@@ -55,17 +55,24 @@ export function renderWithTemplate(template, parentElement, data, callback) {
 // load template file from path via fetch
 export async function loadTemplate(path) {
   const res = await fetch(path);
+  if (!res.ok) {
+    throw new Error(`Failed to load ${path}: ${res.status} ${res.statusText}`);
+  }
   const template = await res.text();
   return template;
 }
 
 // load header and footer templates into DOM
 export async function loadHeaderFooter() {
-  const headerTemplate = await loadTemplate("/partials/header.html");
   const headerElement = document.querySelector("#main-header");
-  renderWithTemplate(headerTemplate, headerElement);
+  if (headerElement) {
+    const headerTemplate = await loadTemplate("/partials/header.html");
+    renderWithTemplate(headerTemplate, headerElement);
+  }
 
-  const footerTemplate = await loadTemplate("/partials/footer.html");
   const footerElement = document.querySelector("#main-footer");
-  renderWithTemplate(footerTemplate, footerElement);
+  if (footerElement) {
+    const footerTemplate = await loadTemplate("/partials/footer.html");
+    renderWithTemplate(footerTemplate, footerElement);
+  }
 }
