@@ -38,13 +38,24 @@ export default class ProductList {
     }
 
     async init() {
-        const list = await this.dataSource.getData(this.category);
+        let list;
+        try {
+            list = await this.dataSource.getData(this.category);
+        } catch (error) {
+            console.error("Failed to load product list:", error);
+            this.listElement.innerHTML = `<li class="cart-empty">
+                <p role="alert">Products could not be loaded. Please try again later.</p>
+            </li>`;
+            return;
+        }
+
         this.renderList(list);
 
         const title = document.getElementById("category-title");
-        //Capitalizes the first letter and replace the hyphen with a space (e.g. "sleeping-bags" -> "Sleeping bags")
-        const name = this.category.replace("-", " ");
-        title.textContent = `Top Products: ${name.charAt(0).toUpperCase() + name.slice(1)}`; 
+        if (title && this.category) {
+            const name = this.category.replace("-", " ");
+            title.textContent = `Top Products: ${name.charAt(0).toUpperCase() + name.slice(1)}`;
+        }
     }
 
     renderList(list) {

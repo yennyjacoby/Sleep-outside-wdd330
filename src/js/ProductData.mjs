@@ -26,18 +26,39 @@
 // }
 
 
-const baseURL = import.meta.env.VITE_SERVER_URL
+const baseURL = import.meta.env.VITE_SERVER_URL;
+
+function getApiUrl(path) {
+  if (!baseURL) {
+    throw new Error("VITE_SERVER_URL is not configured.");
+  }
+
+  return `${baseURL.replace(/\/+$/, "")}/${path}`;
+}
 
 function convertToJson(res) {
-  if (res.ok) {
-    return res.json();
+  if (!res.ok) {
+    throw new Error(`Product API request failed with status ${res.status}.`);
   }
+
+  return res.json();
 }
 
 export default class ProductData {
-
   async getData(category) {
-    const response = await fetch(`${baseURL}products/search/${category}`);
+    const response = await fetch(getApiUrl(`products/search/${category}`));
+    const data = await convertToJson(response);
+    return data.Result;
+  }
+
+  async findProductById(id) {
+    if (!id) {
+      throw new Error("A product ID is required.");
+    }
+
+    const response = await fetch(
+      getApiUrl(`product/${encodeURIComponent(id)}`)
+    );
     const data = await convertToJson(response);
     return data.Result;
   }

@@ -4,18 +4,18 @@ import { loadHeaderFooter, getParam } from "./utils.mjs";
 
 loadHeaderFooter();
 
-// Create an instance of ProductData for tents
-const dataSource = new ProductData();
 const productType = getParam("category");
-
-// Select the product list element from the DOM
 const listElement = document.querySelector(".product-list");
+const title = document.getElementById("category-title");
+const categories = ["tents", "backpacks", "sleeping-bags", "hammocks"];
 
-// Create an instance of ProductList and initialize it
-const inventoryList = new ProductList(productType, dataSource, listElement);
-inventoryList.init();
-
-const title = document.querySelector(".title-highlight");
-
-console.log(productType);
-title.textContent = productType.charAt(0).toUpperCase() + productType.slice(1);
+if (categories.includes(productType)) {
+  const dataSource = new ProductData();
+  const inventoryList = new ProductList(productType, dataSource, listElement);
+  inventoryList.init();
+} else {
+  title.textContent = "Choose a product category";
+  listElement.innerHTML = `<li class="cart-empty">
+    <p role="alert">Select a category from the home page to see its products.</p>
+  </li>`;
+}
