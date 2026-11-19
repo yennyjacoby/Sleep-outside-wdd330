@@ -432,3 +432,123 @@ footer {
   background: var(--secondary-color);
   /* brown on hover */
 }
+
+
+/* Cart Form */
+
+.cart-footer button{
+  background-color: #c05a00;
+  border-radius: 8px;
+
+
+}
+
+.cart-footer button a {
+  text-decoration: none;
+  color: #ffffff;
+  color: #ffffff;
+}
+
+/* checkout FORM  */
+.checkout {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.products h2{
+  margin-bottom: 2rem;
+}
+/* Fieldsets */
+.checkout fieldset {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  background-color: #fffcf6;
+}
+
+.checkout legend {
+  font-weight: bold;
+  color: #000000;
+  padding: 0 0.5rem;
+}
+
+/* Form groups */
+.checkout__name,
+.checkout__address,
+.checkout__payment {
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* Inputs */
+.checkout input[type="text"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+
+/* Labels */
+.checkout label {
+  font-weight: 600;
+  margin-top: 0.5rem;
+  display: block;
+}
+
+/* Order Summary */
+.checkout-summary {
+  background-color: #f8f9fb;
+}
+
+.order__summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.75rem;
+  align-items: center;
+  font-weight: 600;
+  padding: .5rem;
+
+}
+
+/* To separate the Total amount */
+.order__summary div:nth-last-child(-n+2) {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000000;
+  border-top: 1px solid #ddd;
+  padding-top: 0.75rem;
+}
+
+/* Submit Button */
+.checkout button,
+.checkout input[type="submit"] {
+  background-color: #525b0f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.9rem 1.5rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.checkout button:hover,
+.checkout input[type="submit"]:hover {
+  background-color: #c05a00;
+}
+
+.checkout input {
+  border: 1px solid #ccc;
+  border-left: 4px solid #ccc;
+}
+
+.checkout input:valid {
+  border-left: 5px solid green !important;
+}
+
+.checkout input:invalid:not(:placeholder-shown) {
+  border-left: 5px solid red !important;
+}
