@@ -62,6 +62,34 @@
       <section class="products">
         <h2>Review & Place your Order</h2>
       </section>
+      <section class="order">
+        <form action="#">
+          <label for="fname"><input type="text" required></label>
+          <label for="lname"><input type="text" required></label>
+
+          <label for="street"><input type="text" required></label>
+          <label for="city"><input type="text" required></label>
+          <label for="state"><input type="text" required></label>
+          <label for="zip"><input type="text" required></label>
+
+          <label for="cardNumber"><input type="text" required></label>
+          <label for="expirationDate"><input type="text" required></label>
+          <label for="securityCode"><input type="text" required></label>
+          <input type="button" value="Confirm your Purchase">
+        </form>
+        <div class="checkout-summary">
+          <div>Items</div>
+            <div id="num-items"></div>
+            <div>Subtotal</div>
+            <div id="cartTotal"></div>
+            <div>Tax</div>
+            <div id="tax"></div>
+            <div>Shipping</div>
+            <div id="shipping"></div>
+            <div>Total</div>
+            <div id="orderTotal"></div>
+        </div>
+      </section>
     </main>
 
     <footer id="main-footer">&copy;NOT a real business</footer>
