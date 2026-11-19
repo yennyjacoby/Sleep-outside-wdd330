@@ -171,6 +171,24 @@ button {
   fill: gray;
 }
 
+/* superscript item count on cart icon */
+.cart-count {
+  position: absolute; /* .cart is position: relative */
+  top: 0;
+  right: -0.4em;
+  min-width: 1.4em;
+  padding: 0.1em 0.3em;
+  border-radius: 999px;
+  background: #f0a868;
+  color: #000;
+  font-size: 0.7rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.cart-count[hidden] {
+  display: none; /* keeps the hidden attribute working */
+}
 /* End cart icon styles */
 
 .mission {
