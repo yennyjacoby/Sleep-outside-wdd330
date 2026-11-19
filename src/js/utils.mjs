@@ -11,6 +11,7 @@ export function getLocalStorage(key) {
 // save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
+  if (key === "so-cart") updateCartCount(); // keep header badge in sync
 }
 
 // set a listener for both touchend and click
@@ -68,6 +69,7 @@ export async function loadHeaderFooter() {
   if (headerElement) {
     const headerTemplate = await loadTemplate("/partials/header.html");
     renderWithTemplate(headerTemplate, headerElement);
+    updateCartCount();
   }
 
   const footerElement = document.querySelector("#main-footer");
@@ -75,4 +77,14 @@ export async function loadHeaderFooter() {
     const footerTemplate = await loadTemplate("/partials/footer.html");
     renderWithTemplate(footerTemplate, footerElement);
   }
+}
+
+// show total items in cart as a superscript number on the cart icon
+export function updateCartCount() {
+  const badge = document.querySelector("#cart-count");
+  if (!badge) return; // page has no header badge
+  const items = getLocalStorage("so-cart") || [];
+  const count = items.reduce((sum, item) => sum + (item.Quantity || item.quantity || 1), 0); // quantity if set, else 1 each
+  badge.textContent = count;
+  badge.hidden = count === 0; // hide badge when cart is empty
 }
