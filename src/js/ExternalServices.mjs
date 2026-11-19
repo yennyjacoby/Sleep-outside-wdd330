@@ -44,7 +44,11 @@ function convertToJson(res) {
   return res.json();
 }
 
-export default class ProductData {
+export default class ExternalServices {
+  constructor() {
+
+  }
+
   async getData(category) {
     const response = await fetch(getApiUrl(`products/search/${category}`));
     const data = await convertToJson(response);
@@ -61,5 +65,16 @@ export default class ProductData {
     );
     const data = await convertToJson(response);
     return data.Result;
+  }
+
+  async checkout(payload) {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    };
+    return await fetch(`${baseURL}checkout/`, options).then(convertToJson);
   }
 }

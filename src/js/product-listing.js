@@ -1,4 +1,4 @@
-import ProductData from "./ProductData.mjs";
+import ExternalServices from "./ExternalServices.mjs";
 import ProductList from "./ProductList.mjs";
 import { loadHeaderFooter, getParam } from "./utils.mjs";
 
@@ -10,7 +10,7 @@ const title = document.getElementById("category-title");
 const categories = ["tents", "backpacks", "sleeping-bags", "hammocks"];
 
 if (categories.includes(productType)) {
-  const dataSource = new ProductData();
+  const dataSource = new ExternalServices();
   const inventoryList = new ProductList(productType, dataSource, listElement);
   inventoryList.init();
 } else {
