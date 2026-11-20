@@ -42,6 +42,7 @@ export default class CheckoutProcess {
     this.calculateItemSummary();
   }
 
+  //Order summary
   calculateItemSummary() {
     // calculate and display the total amount of the items in the cart, and the number of items.
     const summaryElement = document.querySelector(
@@ -51,9 +52,19 @@ export default class CheckoutProcess {
       this.outputSelector + " #num-items"
     );
     itemNumElement.innerText = this.list.length;
+
+    //Counting the items
+    const itemCount = this.list.reduce(
+      (sum, item) => sum + (item.Quantity || 1),
+      0
+    );
+    itemNumElement.innerText = itemCount;
+
     // calculate the total of all the items in the cart
-    const amounts = this.list.map((item) => item.FinalPrice);
-    this.itemTotal = amounts.reduce((sum, item) => sum + item);
+    const amounts = this.list.map(
+      (item) => item.FinalPrice*(item.Quantity || 1)
+    );
+    this.itemTotal = amounts.reduce((sum, item) => sum + item, 0);
     summaryElement.innerText = `$${this.itemTotal}`;;
   }
 

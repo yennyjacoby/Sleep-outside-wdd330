@@ -20,7 +20,9 @@ function cartItemTemplate(item) {
     <span>${quantity}</span>
     <button class="qty-btn" data-id="${item.Id}" data-delta="1" aria-label="Increase quantity">+</button>
   </div>
-  <p class="cart-card__price">$${item.FinalPrice}</p>
+  <p class="cart-card__price">
+    $${(item.FinalPrice * quantity).toFixed(2)}
+  </p>
 </li>`;
 }
 
