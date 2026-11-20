@@ -51,6 +51,22 @@ export default class ProductList {
 
         this.renderList(list);
 
+        const sortOption = document.querySelector("#sort-by");
+        sortOption.addEventListener("change", (e) => {
+            // console.log(e.target.value);
+            if (e.target.value === "name") {
+                const sortList = [...list];
+                let newList = sortList.sort((a, b) => a.NameWithoutBrand.localeCompare(b.NameWithoutBrand));
+                this.renderList(newList);
+            } else if (e.target.value === "price") {
+                const sortList = [...list];
+                let newList = sortList.sort((a, b) => a.FinalPrice - b.FinalPrice);
+                this.renderList(newList);
+            } else if (e.target.value === "default") {
+                this.renderList(list);
+            }
+        });
+
         const title = document.getElementById("category-title");
         if (title && this.category) {
             const name = this.category.replace("-", " ");
@@ -62,7 +78,9 @@ export default class ProductList {
         renderListWithTemplate(
             productCardTemplate,
             this.listElement,
-            list
+            list,
+            "afterbegin",
+            true
         );
     }
 
