@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage, removeAllAlerts } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -20,7 +20,7 @@ function packageItems(items) {
       id: item.Id,
       price: item.FinalPrice,
       name: item.Name,
-      quantity: 1,
+      quantity: item.Quantity,
     };
   });
   return simplifiedItems;
@@ -50,10 +50,14 @@ export default class CheckoutProcess {
     const itemNumElement = document.querySelector(
       this.outputSelector + " #num-items"
     );
-    itemNumElement.innerText = this.list.length;
+    // below is what grabs and acutally shows the number of items. It had to be changed from list.length, which only showed
+    // unique entries, to list.reduce, which adds the items quantity to the total, which starts at 0.
+    itemNumElement.innerText = this.list.reduce(
+        (total, item) => total + item.Quantity, 0
+    );
     // calculate the total of all the items in the cart
-    const amounts = this.list.map((item) => item.FinalPrice);
-    this.itemTotal = amounts.reduce((sum, item) => sum + item);
+    const amounts = this.list.map((item) => item.FinalPrice * item.Quantity);
+    this.itemTotal = amounts.reduce((sum, item) => sum + item, 0);
     summaryElement.innerText = `$${this.itemTotal}`;;
   }
 
@@ -93,10 +97,17 @@ export default class CheckoutProcess {
     //console.log(order);
 
     try {
-      const response = await services.checkout(order);
-      console.log(response);
+        await services.checkout(order);
+        setLocalStorage(this.key, [])
+        window.location.assign("./success.html")
+      
+
     } catch (err) {
-      console.log(err);
+      removeAllAlerts();
+      const messages = err.message && typeof err.message === "object"
+        ? Object.values(err.message)
+        : [err.message || "Unable to place your order."];
+      messages.forEach((message) => alertMessage(message));
     }
   }
 }

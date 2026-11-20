@@ -5,6 +5,7 @@ loadHeaderFooter();
 
 const order = new CheckoutProcess("so-cart", ".checkout-summary");
 order.init();
+order.calculateOrderTotal();
 
 // Add event listeners to fire calculateOrderTotal when the user changes the zip code
 document
@@ -13,7 +14,10 @@ document
 
 // listening for click on the button
 document.querySelector("#checkoutSubmit").addEventListener("click", (e) => {
-  e.preventDefault();
-
-  order.checkout();
+    e.preventDefault();
+    if (e.currentTarget.checkValidity()) {
+        order.checkout()
+    } else {
+        e.currentTarget.reportValidity();
+    }
 });

@@ -36,12 +36,12 @@ function getApiUrl(path) {
   return `${baseURL.replace(/\/+$/, "")}/${path}`;
 }
 
-function convertToJson(res) {
-  if (!res.ok) {
-    throw new Error(`Product API request failed with status ${res.status}.`);
+async function convertToJson(res) {
+  const jsonResponse = await res.json();
+  if (res.ok) {
+    return jsonResponse
   }
-
-  return res.json();
+    throw { name: "servicesError", message: jsonResponse };
 }
 
 export default class ExternalServices {
