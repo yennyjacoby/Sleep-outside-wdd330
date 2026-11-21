@@ -22,7 +22,20 @@ function productCardTemplate(product) {
     return `<li class="product-card">
         <a href="../product_pages/?product=${product.Id}">
         ${discountBadge}
-        <img src="${product.Images.PrimaryMedium}" alt="Image of ${product.Name}">
+        <picture>
+            <source
+                media="(min-width: 1200px)"
+                srcset="${product.Images.PrimaryExtraLarge}">
+            <source
+                media="(min-width: 768px)"
+                srcset="${product.Images.PrimaryLarge}">
+            <source
+                media="(min-width: 480px)"
+                srcset="${product.Images.PrimaryMedium}">
+            <img
+                src="${product.Images.PrimarySmall}"
+                alt="Image of ${product.Name}">
+        </picture>
         <h3 class="card__brand">${brand}</h3>
         <h2 class="card__name">${product.NameWithoutBrand}</h2>
         <p class="product-card__price">$${product.FinalPrice}</p>
@@ -104,7 +117,20 @@ export default class ProductList {
                     &times;
                 </button>
 
-                <img src="${product.Image}" alt="${product.NameWithoutBrand}">
+                <picture>
+                    <source
+                        media="(min-width: 1200px)"
+                        srcset="${product.Images.PrimaryExtraLarge}">
+                    <source
+                        media="(min-width: 1000px)"
+                        srcset="${product.Images.PrimaryLarge}">
+                    <source
+                        media="(min-width: 600px)"
+                        srcset="${product.Images.PrimaryMedium}">
+                    <img
+                        src="${product.Images.PrimarySmall}"
+                        alt="${product.NameWithoutBrand}">
+                </picture>                
 
                 <div class="quick-view-info">
                     <h2>${brand}</h2>
