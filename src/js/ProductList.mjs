@@ -22,20 +22,7 @@ function productCardTemplate(product) {
     return `<li class="product-card">
         <a href="../product_pages/?product=${product.Id}">
         ${discountBadge}
-        <picture>
-            <source
-                media="(min-width: 1200px)"
-                srcset="${product.Images.PrimaryExtraLarge}">
-            <source
-                media="(min-width: 768px)"
-                srcset="${product.Images.PrimaryLarge}">
-            <source
-                media="(min-width: 480px)"
-                srcset="${product.Images.PrimaryMedium}">
-            <img
-                src="${product.Images.PrimarySmall}"
-                alt="Image of ${product.Name}">
-        </picture>
+        <img src="${product.Images.PrimaryMedium}" alt="Image of ${product.Name}">
         <h3 class="card__brand">${brand}</h3>
         <h2 class="card__name">${product.NameWithoutBrand}</h2>
         <p class="product-card__price">$${product.FinalPrice}</p>
@@ -65,26 +52,20 @@ export default class ProductList {
         this.renderList(list);
 
         const sortOption = document.querySelector("#sort-by");
-
-        if (sortOption) {
-            sortOption.addEventListener("change", (e) => {
-                if (e.target.value === "name") {
-                    const sortList = [...list];
-                    let newList = sortList.sort((a, b) =>
-                        a.NameWithoutBrand.localeCompare(b.NameWithoutBrand)
-                    );
-                    this.renderList(newList);
-                } else if (e.target.value === "price") {
-                    const sortList = [...list];
-                    let newList = sortList.sort((a, b) =>
-                        a.FinalPrice - b.FinalPrice
-                    );
-                    this.renderList(newList);
-                } else if (e.target.value === "default") {
-                    this.renderList(list);
-                }
-            });
-        }
+        sortOption.addEventListener("change", (e) => {
+            // console.log(e.target.value);
+            if (e.target.value === "name") {
+                const sortList = [...list];
+                let newList = sortList.sort((a, b) => a.NameWithoutBrand.localeCompare(b.NameWithoutBrand));
+                this.renderList(newList);
+            } else if (e.target.value === "price") {
+                const sortList = [...list];
+                let newList = sortList.sort((a, b) => a.FinalPrice - b.FinalPrice);
+                this.renderList(newList);
+            } else if (e.target.value === "default") {
+                this.renderList(list);
+            }
+        });
 
         const title = document.getElementById("category-title");
         if (title && this.category) {
@@ -123,20 +104,7 @@ export default class ProductList {
                     &times;
                 </button>
 
-                <picture>
-                    <source
-                        media="(min-width: 1200px)"
-                        srcset="${product.Images.PrimaryExtraLarge}">
-                    <source
-                        media="(min-width: 1000px)"
-                        srcset="${product.Images.PrimaryLarge}">
-                    <source
-                        media="(min-width: 600px)"
-                        srcset="${product.Images.PrimaryMedium}">
-                    <img
-                        src="${product.Images.PrimarySmall}"
-                        alt="${product.NameWithoutBrand}">
-                </picture>
+                <img src="${product.Image}" alt="${product.NameWithoutBrand}">
 
                 <div class="quick-view-info">
                     <h2>${brand}</h2>
