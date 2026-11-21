@@ -88,33 +88,3 @@ export function updateCartCount() {
   badge.textContent = count;
   badge.hidden = count === 0; // hide badge when cart is empty
 }
-
-
-//Alert message for Errors when filling the form
-export function alertMessage(message, scroll = true) {
-  // create element to hold the alert
-  const alert = document.createElement('div');
-  // add a class to style the alert
-  alert.className = "alert";
-  // set the contents. You should have a message and an X or something the user can click on to remove
-
-  const text = document.createElement("p");
-  text.textContent = message;
-  const close = document.createElement("button");
-  close.type = "button";
-  close.textContent = "X";
-  close.setAttribute("aria-label", "Dismiss message");
-
-  // add a listener to the alert to see if they clicked on the X
-  // if they did then remove the child
-  close.addEventListener("click", () => alert.remove());
-  alert.append(text,close);
-
-  const main = qs("main");
-  main.prepend(alert);
-  if (scroll) window.scrollTo(0, 0);
-}
-
-export function removeAllAlerts() {
-  document.querySelectorAll(".alert").forEach((alert) => alert.remove());
-}
