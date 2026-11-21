@@ -32,7 +32,8 @@
 
 // When I tried npm run build, it was popping up errors with this page, so I went to the example of what we are supposed to do and it looks nothing like this, so I am copy and pasting that code.
 
-import { getLocalStorage, setLocalStorage, updateCartCount } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, updateCartCount, alertMessage } from "./utils.mjs";
+
 
 export default class ProductDetails {
 
@@ -90,6 +91,8 @@ export default class ProductDetails {
     
     setLocalStorage("so-cart", cartItems);
     updateCartCount(); // update the badge immediately
+
+    alertMessage(`${this.product.Name} was added to your cart.`, false);
   }
 
   renderProductDetails() {

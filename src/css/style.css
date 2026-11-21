@@ -570,3 +570,29 @@ footer {
 .checkout input:invalid:not(:placeholder-shown) {
   border-left: 5px solid red !important;
 }
+
+
+.alert {
+  background-color: #e8a66a;
+  border: 1px solid #c97832;
+  color: #222;
+  font-weight: 700;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert p {
+  margin: 0;
+}
+
+.alert button {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #090808;
+}

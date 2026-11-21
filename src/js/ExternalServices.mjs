@@ -1,13 +1,5 @@
 // const baseURL = import.meta.env.VITE_SERVER_URL
 
-// function convertToJson(res) {
-//   if (res.ok) {
-//     return res.json();
-//   } else {
-//     throw new Error("Bad Response");
-//   }
-// }
-
 // export default class ProductData {
 //   constructor() {
 //     // this.category = category;
@@ -34,14 +26,6 @@ function getApiUrl(path) {
   }
 
   return `${baseURL.replace(/\/+$/, "")}/${path}`;
-}
-
-function convertToJson(res) {
-  if (!res.ok) {
-    throw new Error(`Product API request failed with status ${res.status}.`);
-  }
-
-  return res.json();
 }
 
 export default class ExternalServices {
@@ -76,5 +60,19 @@ export default class ExternalServices {
       body: JSON.stringify(payload),
     };
     return await fetch(`${baseURL}checkout/`, options).then(convertToJson);
+  }
+}
+
+//What went wrong  
+async function convertToJson(res) {
+  const jsonResponse = await res.json();
+
+  if (res.ok) {
+    return jsonResponse;
+  } else {
+    throw {
+      name: "servicesError",
+      message: jsonResponse,
+    };
   }
 }
