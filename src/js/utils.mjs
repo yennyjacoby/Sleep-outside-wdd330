@@ -122,3 +122,44 @@ export function alertMessage(message, scroll = true) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
+
+// render breadcrumb navigation trail inside <main>
+export function renderBreadcrumb(crumbs) {
+  const main = document.querySelector("main");
+  if (!main) return;
+
+  const existingNav = main.querySelector(".breadcrumb-nav");
+  if (existingNav) {
+    existingNav.remove();
+  }
+
+  const nav = document.createElement("nav");
+  nav.className = "breadcrumb-nav";
+  nav.setAttribute("aria-label", "Breadcrumb");
+
+  const list = document.createElement("ol");
+  list.className = "breadcrumb-list";
+
+  crumbs.forEach((crumb, index) => {
+    const item = document.createElement("li");
+    item.className = "breadcrumb-item";
+
+    const isLast = index === crumbs.length - 1;
+    if (crumb.url && !isLast) {
+      const link = document.createElement("a");
+      link.href = crumb.url;
+      link.textContent = crumb.label;
+      item.appendChild(link);
+    } else {
+      item.textContent = crumb.label;
+      if (isLast) {
+        item.setAttribute("aria-current", "page");
+      }
+    }
+
+    list.appendChild(item);
+  });
+
+  nav.appendChild(list);
+  main.prepend(nav);
+}
