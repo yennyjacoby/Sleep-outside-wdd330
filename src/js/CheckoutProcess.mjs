@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 const services = new ExternalServices();
@@ -20,7 +20,7 @@ function packageItems(items) {
       id: item.Id,
       price: item.FinalPrice,
       name: item.Name,
-      quantity: 1,
+      quantity: item.Quantity || 1,
     };
   });
   return simplifiedItems;
@@ -38,7 +38,7 @@ export default class CheckoutProcess {
   }
 
   init() {
-    this.list = getLocalStorage(this.key);
+    this.list = getLocalStorage(this.key) || [];
     this.calculateItemSummary();
   }
 
@@ -62,21 +62,20 @@ export default class CheckoutProcess {
 
     // calculate the total of all the items in the cart
     const amounts = this.list.map(
-      (item) => item.FinalPrice*(item.Quantity || 1)
+      (item) => item.FinalPrice * (item.Quantity || 1)
     );
     this.itemTotal = amounts.reduce((sum, item) => sum + item, 0);
-    summaryElement.innerText = `$${this.itemTotal}`;;
+    summaryElement.innerText = `$${this.itemTotal.toFixed(2)}`;
   }
 
   calculateOrderTotal() {
     // calculate the shipping and tax amounts. Then use them to along with the cart total to figure out the order total
-    this.tax = (this.itemTotal * .06);
-    this.shipping = 10 + (this.list.length - 1) * 2;
-    this.orderTotal = (
+    this.tax = this.itemTotal * 0.06;
+    this.shipping = this.list.length > 0 ? 10 + (this.list.length - 1) * 2 : 0;
+    this.orderTotal =
       parseFloat(this.itemTotal) +
       parseFloat(this.tax) +
-      parseFloat(this.shipping)
-    )
+      parseFloat(this.shipping);
     // display the totals.
     this.displayOrderTotals();
   }
@@ -101,12 +100,18 @@ export default class CheckoutProcess {
     order.tax = this.tax;
     order.shipping = this.shipping;
     order.items = packageItems(this.list);
-    //console.log(order);
 
     try {
       const response = await services.checkout(order);
       console.log(response);
+      setLocalStorage(this.key, []);
+      window.location.href = "/checkout/success.html";
     } catch (err) {
+      const message =
+        typeof err?.message === "object"
+          ? Object.values(err.message).join(" ")
+          : err?.message || "Unable to complete order. Please check your details.";
+      alertMessage(message);
       console.log(err);
     }
   }
