@@ -88,3 +88,37 @@ export function updateCartCount() {
   badge.textContent = count;
   badge.hidden = count === 0; // hide badge when cart is empty
 }
+
+// display a dismissible alert banner at the top of <main>
+export function alertMessage(message, scroll = true) {
+  const main = document.querySelector("main");
+  if (!main) return;
+
+  const existingAlert = main.querySelector(".alert-message");
+  if (existingAlert) {
+    existingAlert.remove();
+  }
+
+  const alert = document.createElement("div");
+  alert.className = "alert-message";
+  alert.setAttribute("role", "alert");
+
+  const text = document.createElement("p");
+  text.textContent = message;
+
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.className = "alert-message__close";
+  closeBtn.setAttribute("aria-label", "Close alert");
+  closeBtn.textContent = "×";
+  closeBtn.addEventListener("click", () => {
+    alert.remove();
+  });
+
+  alert.append(text, closeBtn);
+  main.prepend(alert);
+
+  if (scroll) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
