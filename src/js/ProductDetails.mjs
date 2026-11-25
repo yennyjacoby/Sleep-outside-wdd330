@@ -31,7 +31,7 @@
 
 
 // When I tried npm run build, it was popping up errors with this page, so I went to the example of what we are supposed to do and it looks nothing like this, so I am copy and pasting that code.
-
+import { addToWishlist } from "./wishlist.mjs";
 import {
   getLocalStorage,
   setLocalStorage,
@@ -70,6 +70,10 @@ export default class ProductDetails {
     document
       .getElementById('addToCart')
       .addEventListener('click', this.addProductToCart.bind(this));
+    // Connects the wish list button, same way as the cart button
+    document
+      .getElementById('addToWishlist')
+      .addEventListener('click', this.addProductToWishlist.bind(this));
   }
 
   showProductNotFound() {
@@ -96,6 +100,12 @@ export default class ProductDetails {
     setLocalStorage("so-cart", cartItems);
     updateCartCount(); // update the badge immediately
     alertMessage(`${this.product.NameWithoutBrand || this.product.Name || "Item"} added to cart!`);
+  }
+
+  // Saves the current product to the wish list and shows a confirmation.
+  addProductToWishlist() {
+    addToWishlist(this.product);
+    alertMessage(`${this.product.NameWithoutBrand || this.product.Name || "Item"} added to wish list!`);
   }
 
   renderProductDetails() {
