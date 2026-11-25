@@ -90,7 +90,7 @@ p {
   margin-top: -1.3em;
 }
 
-.logo--square > div {
+.logo--square>div {
   margin-top: -1.7em;
 }
 
@@ -173,7 +173,8 @@ button {
 
 /* superscript item count on cart icon */
 .cart-count {
-  position: absolute; /* .cart is position: relative */
+  position: absolute;
+  /* .cart is position: relative */
   top: 0;
   right: -0.4em;
   min-width: 1.4em;
@@ -187,8 +188,10 @@ button {
 }
 
 .cart-count[hidden] {
-  display: none; /* keeps the hidden attribute working */
+  display: none;
+  /* keeps the hidden attribute working */
 }
+
 /* End cart icon styles */
 
 .mission {
@@ -371,6 +374,7 @@ button {
   color: var(--dark-grey);
   padding: 0;
 }
+
 .hide {
   display: none;
 }
@@ -454,7 +458,7 @@ footer {
 
 /* Cart Form */
 
-.cart-footer button{
+.cart-footer button {
   background-color: #c05a00;
   border-radius: 8px;
 
@@ -474,9 +478,10 @@ footer {
   padding: 2rem;
 }
 
-.products h2{
+.products h2 {
   margin-bottom: 2rem;
 }
+
 /* Fieldsets */
 .checkout fieldset {
   border: 2px solid #ddd;
@@ -732,4 +737,28 @@ footer {
 
 .wishlist-link:hover {
   color: var(--tertiary-color);
+}
+/* Breadcrumb navigation */
+.breadcrumb-nav {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+  content: "/";
+  margin: 0 0.5rem;
+  color: #666;
+}
+
+.breadcrumb-item [aria-current="page"] {
+  font-weight: bold;
 }
