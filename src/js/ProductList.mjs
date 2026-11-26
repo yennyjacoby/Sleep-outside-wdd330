@@ -44,16 +44,19 @@ function productCardTemplate(product) {
 }
 
 export default class ProductList {
-    constructor(category, dataSource, listElement) {
+    constructor(category, dataSource, listElement, searchTerm = null) {
         this.category = category;
         this.dataSource = dataSource;
         this.listElement = listElement;
+        this.searchTerm = searchTerm; // set only on search results page
     }
 
     async init() {
         let list;
         try {
-            list = await this.dataSource.getData(this.category);
+            list = this.searchTerm
+                ? await this.dataSource.searchProducts(this.searchTerm)
+                : await this.dataSource.getData(this.category);
         } catch (error) {
             console.error("Failed to load product list:", error);
             this.listElement.innerHTML = `<li class="cart-empty">
@@ -63,6 +66,10 @@ export default class ProductList {
         }
 
         this.renderList(list);
+
+        if (!list.length) {
+            this.listElement.innerHTML = `<li class="cart-empty"><p>No products found.</p></li>`;
+        }
 
         const sortOption = document.querySelector("#sort-by");
         // Added "if" to avoid error in console when sortOption is null
@@ -84,7 +91,9 @@ export default class ProductList {
         }
 
         const title = document.getElementById("category-title");
-        if (title && this.category) {
+        if (title && this.searchTerm) {
+            title.textContent = `Search results for "${this.searchTerm}"`;
+        } else if (title && this.category) {
             const name = this.category.replace("-", " ");
             title.textContent = `Top Products: ${name.charAt(0).toUpperCase() + name.slice(1)}`;
         }
