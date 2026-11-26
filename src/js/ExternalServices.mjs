@@ -26,6 +26,14 @@ export default class ExternalServices {
     return data.Result;
   }
 
+  // search all categories and keep products whose name contains the term
+  async searchProducts(term) {
+    const categories = ["tents", "backpacks", "sleeping-bags", "hammocks"];
+    const results = await Promise.all(categories.map((c) => this.getData(c))); // fetch all in parallel
+    const needle = term.trim().toLowerCase();
+    return results.flat().filter((p) => (p.Name || "").toLowerCase().includes(needle));
+  }
+
   async findProductById(id) {
     if (!id) {
       throw new Error("A product ID is required.");
