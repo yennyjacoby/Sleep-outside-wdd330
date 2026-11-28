@@ -1,3 +1,4 @@
+
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
@@ -162,4 +163,18 @@ export function renderBreadcrumb(crumbs) {
 
   nav.appendChild(list);
   main.prepend(nav);
+}
+
+// Animation for cart
+export function animateCart() {
+  const cart = document.querySelector(".cart");
+
+  if (!cart) return;
+
+  cart.classList.remove("cart-bounce");
+
+  // Forces browser reflow so animation can replay
+  void cart.offsetWidth;
+
+  cart.classList.add("cart-bounce");
 }

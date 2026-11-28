@@ -6,6 +6,8 @@ loadHeaderFooter();
 const cart = new ShoppingCart("so-cart", ".product-list")
 cart.renderCart();
 
+
+
   /*  
       I moved these lines of code to ShoppingCart.mjs
       You can check them
