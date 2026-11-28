@@ -88,3 +88,78 @@ export function updateCartCount() {
   badge.textContent = count;
   badge.hidden = count === 0; // hide badge when cart is empty
 }
+
+// display a dismissible alert banner at the top of <main>
+export function alertMessage(message, scroll = true) {
+  const main = document.querySelector("main");
+  if (!main) return;
+
+  const existingAlert = main.querySelector(".alert-message");
+  if (existingAlert) {
+    existingAlert.remove();
+  }
+
+  const alert = document.createElement("div");
+  alert.className = "alert-message";
+  alert.setAttribute("role", "alert");
+
+  const text = document.createElement("p");
+  text.textContent = message;
+
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.className = "alert-message__close";
+  closeBtn.setAttribute("aria-label", "Close alert");
+  closeBtn.textContent = "×";
+  closeBtn.addEventListener("click", () => {
+    alert.remove();
+  });
+
+  alert.append(text, closeBtn);
+  main.prepend(alert);
+
+  if (scroll) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+}
+
+// render breadcrumb navigation trail inside <main>
+export function renderBreadcrumb(crumbs) {
+  const main = document.querySelector("main");
+  if (!main) return;
+
+  const existingNav = main.querySelector(".breadcrumb-nav");
+  if (existingNav) {
+    existingNav.remove();
+  }
+
+  const nav = document.createElement("nav");
+  nav.className = "breadcrumb-nav";
+  nav.setAttribute("aria-label", "Breadcrumb");
+
+  const list = document.createElement("ol");
+  list.className = "breadcrumb-list";
+
+  crumbs.forEach((crumb, index) => {
+    const item = document.createElement("li");
+    item.className = "breadcrumb-item";
+
+    const isLast = index === crumbs.length - 1;
+    if (crumb.url && !isLast) {
+      const link = document.createElement("a");
+      link.href = crumb.url;
+      link.textContent = crumb.label;
+      item.appendChild(link);
+    } else {
+      item.textContent = crumb.label;
+      if (isLast) {
+        item.setAttribute("aria-current", "page");
+      }
+    }
+
+    list.appendChild(item);
+  });
+
+  nav.appendChild(list);
+  main.prepend(nav);
+}
