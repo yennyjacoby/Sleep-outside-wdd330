@@ -37,7 +37,10 @@ import {
   setLocalStorage,
   updateCartCount,
   alertMessage,
+  animateCart
 } from "./utils.mjs";
+
+
 
 export default class ProductDetails {
 
@@ -99,7 +102,13 @@ export default class ProductDetails {
 
     setLocalStorage("so-cart", cartItems);
     updateCartCount(); // update the badge immediately
-    alertMessage(`${this.product.NameWithoutBrand || this.product.Name || "Item"} added to cart!`);
+    
+    // Animated cart
+    animateCart();
+    alertMessage(
+      `${this.product.NameWithoutBrand || this.product.Name || "Item"} added to cart!`
+    );
+
   }
 
   // Saves the current product to the wish list and shows a confirmation.
