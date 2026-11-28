@@ -57,8 +57,32 @@ function initRegistrationPromo() {
   });
 }
 
+
+
 // Run the registration promotion
 initRegistrationPromo();
+
+
+const newsletterForm = document.querySelector("#newsletter-form");
+const newsletterEmail = document.querySelector("#newsletter-email");
+const newsletterMessage = document.querySelector("#newsletter-message");
+
+newsletterForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const email = newsletterEmail.value.trim();
+
+  if (!email) {
+    newsletterMessage.textContent = "Please enter your email address.";
+    return;
+  }
+
+  newsletterMessage.textContent =
+    "Thank you for subscribing to our newsletter!";
+
+  newsletterForm.reset();
+});
+
 
 // Existing product listing functionality
 const dataSource = new ExternalServices("tents");

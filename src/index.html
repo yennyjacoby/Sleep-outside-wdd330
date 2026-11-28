@@ -67,6 +67,40 @@
       <dialog id="quick-view-dialog" class="quick-view-dialog">
       </dialog>
     </section>
+
+    <section class="newsletter" aria-labelledby="newsletter-title">
+      <div class="newsletter__content">
+        <h2 id="newsletter-title">Stay in the Loop</h2>
+        <p>
+          Sign up for our newsletter to receive updates,
+          special offers, and outdoor adventure tips.
+        </p>
+
+        <form class="newsletter__form" id="newsletter-form">
+          <label for="newsletter-email">Email address</label>
+
+          <div class="newsletter__input-group">
+            <input
+              type="email"
+              id="newsletter-email"
+              name="email"
+              placeholder="Enter your email address"
+              autocomplete="email"
+              required
+            />
+
+            <button type="submit">Subscribe</button>
+          </div>
+
+          <p
+            class="newsletter__message"
+            id="newsletter-message"
+            aria-live="polite"
+          ></p>
+        </form>
+      </div>
+    </section>
+
   </main>
 
   <footer id="main-footer"></footer>
